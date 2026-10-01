@@ -266,53 +266,17 @@
     border-radius: 4px;
     padding: 36px 32px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 24px;
-    align-items: flex-end;
-    justify-content: space-between;
   }
   .capture-box h4 {
     font-family: var(--font-display);
     font-size: 22px;
     margin: 0 0 8px;
-    max-width: 22ch;
+    max-width: 30ch;
   }
-  .capture-box p { margin: 0; color: #D9D2C4; font-size: 14px; max-width: 40ch; }
-  form.capture-form {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  select.g-select, input.g-email {
-    font-family: var(--font-body);
-    font-size: 14.5px;
-    padding: 13px 14px;
-    border-radius: 3px;
-    border: 1px solid var(--line-on-dark);
-    background: rgba(243,239,231,0.06);
-    color: var(--bone);
-    min-width: 190px;
-  }
-  select.g-select option { color: #111; }
-  input.g-email::placeholder { color: #A79E8E; }
-  .capture-form .btn-primary { padding: 13px 22px; }
-  .form-note {
-    width: 100%;
-    font-size: 12.5px;
-    color: #A79E8E;
-    margin-top: 10px;
-  }
-  .form-success {
-    display: none;
-    background: rgba(193,64,27,0.14);
-    border: 1px solid var(--ember);
-    color: var(--bone);
-    padding: 14px 18px;
-    border-radius: 3px;
-    font-size: 14.5px;
-    width: 100%;
-  }
+  .capture-box p { margin: 0; color: #D9D2C4; font-size: 14px; max-width: 48ch; }
+  #kit-embed-wrap { width: 100%; }
 
   /* ---------- Programmes ---------- */
   .programme-grid {
@@ -573,19 +537,9 @@
         <h4 id="capture-heading">Get your free guide sent over</h4>
         <p>One email, no spam. You'll also hear when a new programme or guide drops.</p>
       </div>
-      <form class="capture-form" onsubmit="return handleSubmit(event)">
-        <select class="g-select" id="guide-select">
-          <option value="The Fat Loss Blueprint">The Fat Loss Blueprint</option>
-          <option value="The Muscle Blueprint">The Muscle Blueprint</option>
-          <option value="The Calisthenics Blueprint">The Calisthenics Blueprint</option>
-          <option value="The Strength Blueprint">The Strength Blueprint</option>
-          <option value="All four guides">All four guides</option>
-        </select>
-        <input class="g-email" type="email" required placeholder="you@email.com" id="guide-email">
-        <button class="btn btn-primary" type="submit">Send it to me</button>
-        <div class="form-success" id="form-success">Thanks — check your inbox shortly for your guide.</div>
-        <p class="form-note">This form is a working preview. Connect it to an email tool (like Mailchimp or ConvertKit) before the site goes live, so guides actually get delivered.</p>
-      </form>
+      <div id="kit-embed-wrap">
+        <script async data-uid="4fc49570ff" src="https://train-with-elzz.kit.com/4fc49570ff/index.js"></script>
+      </div>
     </div>
   </div>
 </section>
@@ -676,31 +630,11 @@
 
 <script>
   function selectGuide(name) {
-    document.getElementById('guide-select').value = name;
     var heading = (name === 'All four guides')
       ? 'Get all four guides sent over'
       : 'Get "' + name + '" sent over';
     document.getElementById('capture-heading').textContent = heading;
-    document.getElementById('guide-email').focus({ preventScroll: true });
     document.querySelector('.capture-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      var email = document.getElementById('guide-email').value;
-      if (!email) return false;
-      var name = document.getElementById('guide-select').value;
-      var msg = (name === 'All four guides')
-        ? 'Thanks — check your inbox shortly for all four guides.'
-        : 'Thanks — check your inbox shortly for your guide.';
-      var successEl = document.getElementById('form-success');
-      successEl.textContent = msg;
-      successEl.style.display = 'block';
-      document.getElementById('guide-email').value = '';
-    } catch (err) {
-      console.error('Form error', err);
-    }
-    return false;
   }
 </script>
 
